@@ -1,11 +1,12 @@
 import model.Controller;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Main {
 
-    private static Scanner sc;
-    private static Controller controller;
+    private Scanner sc;
+    private Controller controller;
 
     public Main (){
         this.sc =  new Scanner(System.in);
@@ -13,7 +14,14 @@ public class Main {
     }
     public static void main(String[] args) {
         Main main = new Main();
-        main.mainMenu();
+
+        try {
+            main.getController().loadData();
+            main.mainMenu();
+            main.getController().saveData();
+        } catch (IOException ex){
+            ex.printStackTrace();
+        }
     }
 
     private void mainMenu (){
@@ -67,5 +75,9 @@ public class Main {
 
     private void showCountries (){
 
+    }
+
+    public Controller getController() {
+        return controller;
     }
 }
